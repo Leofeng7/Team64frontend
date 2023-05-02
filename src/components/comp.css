@@ -1,0 +1,141 @@
+.product {
+    color:lightcoral;
+    font-weight: 200;
+    font-size: 2.5rem;
+}
+.product2 {
+    color:lightcoral;
+    font-weight: 200;
+    font-size: 1.5rem;
+}
+.addButton {
+    margin: 1rem;
+}
+.spacer {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.nav_container {
+    box-shadow: 10;
+}
+
+.btn {
+    background-color: #E31B23;
+    color: white;
+    font-weight: 200;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0;
+    padding: 0.2rem;
+    margin: 0 0.5rem;
+    border-radius: 25px;
+    max-width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .btn:hover,
+  .btn-active {
+    background-color:#B5121B;
+    color: white;
+  }
+  
+  .btn:hover {
+    cursor: pointer;
+  }
+  
+  .smoothie-item {
+    width: 100px;
+    /* height: 150px; */
+    /* margin: 10px; */
+    margin: 0.5rem;
+  }
+
+  .pos-item {
+    margin-bottom: 0.5rem;
+    font-size: 9px;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .smoothie-item .pos-item {
+    /* display: flex; */
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .smoothie-item .pos-item img {
+    flex-grow: 1;
+    max-height: 100%;
+  }
+  
+  .smoothie-item .pos-item p {
+    margin: 0;
+
+    /* font-size: 0.6rem;
+    max-width: 100%;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+    /* white-space: nowrap; */
+  }
+
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .col-lg-4 {
+    margin-left: auto;
+  }
+
+  .col-lg-9 {
+    margin-right: auto;
+  }
+
+  .parent-element {
+    position: fixed;
+    top: 25%;
+    right: 1.5%;
+  }   
+
+  .plsaddmsg {
+    transform: translate(20%, -200%);
+  }
+
+  .smoothiegrid {
+    transform: translate(-1%, 0%);
+  }
+
+  .paynowbtn {
+    max-width: 150px;
+    transform: translate(-20%, -50%);
+  }
+
+  .purchasedbtn {
+    transform: translate(55%, -380%);
+  }
+
+  .navbar-arrow {
+    width: 24px;
+    height: 24px;
+  }
+
+  .weather-details-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-brand {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  
