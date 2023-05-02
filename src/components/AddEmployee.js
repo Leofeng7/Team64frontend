@@ -15,7 +15,7 @@ export default class AddEmployee extends Component{
 
     fetchEmployees = async() => {
         try {
-          const response = await fetch("http://localhost:8000/employees")
+          const response = await fetch("https://team64backend.onrender.com/employees")
           const jsonData = await response.json()
           this.setState({
             employees: jsonData
@@ -26,7 +26,7 @@ export default class AddEmployee extends Component{
     }
 
     AddEmployee(emp_name, emp_hours, emp_startday, shift_id) { // Adding a new item to the database
-        return fetch('http://localhost:8000/employees', {
+        return fetch('https://team64backend.onrender.com/employees', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ emp_name, emp_hours, emp_startday, shift_id }),

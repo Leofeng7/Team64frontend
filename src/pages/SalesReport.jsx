@@ -24,7 +24,7 @@ function SalesReport() {
   async function updateBest() {
     const type=1
     try {
-      const response = await fetch("http://localhost:8000/salesreport", {
+      const response = await fetch("https://team64backend.onrender.com/salesreport", {
         method : "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({startDate, endDate, type}),
@@ -40,7 +40,7 @@ function SalesReport() {
   async function updateWorst() {
     const type=0
     try {
-      const response = await fetch("http://localhost:8000/salesreport", {
+      const response = await fetch("https://team64backend.onrender.com/salesreport", {
         method : "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({startDate, endDate, type}),

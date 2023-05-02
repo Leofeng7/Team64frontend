@@ -21,7 +21,7 @@ function ExcessReport() {
   }
   async function handleItems() {
     try {
-      const response = await fetch("http://localhost:8000/excess", {
+      const response = await fetch("https://team64backend.onrender.com/excess", {
         method : "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({startDate, endDate})

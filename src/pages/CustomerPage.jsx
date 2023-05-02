@@ -5,7 +5,7 @@ import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
 function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
-  return fetch('http://localhost:8000/orders', {
+  return fetch('https://team64backend.onrender.com/orders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ trans_date, trans_dayofweek, sm_name, trans_price, offset}),
@@ -27,7 +27,7 @@ function CustomerPage() {
   {/* Get Smoothies from Backend */}
   const fetchProducts = async() => {
     try {
-      const response = await fetch("http://localhost:8000/smoothies")
+      const response = await fetch("https://team64backend.onrender.com/smoothies")
       const jsonData = await response.json()
       setProducts(jsonData)
       console.log(jsonData)

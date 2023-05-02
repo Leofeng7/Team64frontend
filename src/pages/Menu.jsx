@@ -21,7 +21,7 @@ function Menu() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:8000/smoothies');
+      const response = await fetch('https://team64backend.onrender.com/smoothies');
       const jsonData = await response.json();
       setProducts(jsonData);
       console.log(jsonData);

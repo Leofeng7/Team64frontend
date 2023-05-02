@@ -15,7 +15,7 @@ export default class AddInventory extends Component{
 
     fetchProducts = async() => {
         try {
-          const response = await fetch("http://localhost:8000/inventory")
+          const response = await fetch("https://team64backend.onrender.com/inventory")
           const jsonData = await response.json()
           await this.setState({
             products: jsonData
@@ -26,7 +26,7 @@ export default class AddInventory extends Component{
     }
 
     AddItem(item_quantitylbs, item_name, item_ppp) { // Adding a new item to the database
-        return fetch('http://localhost:8000/inventory', {
+        return fetch('https://team64backend.onrender.com/inventory', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ item_quantitylbs, item_name, item_ppp }),
@@ -34,7 +34,7 @@ export default class AddInventory extends Component{
     } 
 
     DeleteItem(item_id) { // Deleting an item from the database
-        return fetch('http://localhost:8000/inventory', {
+        return fetch('https://team64backend.onrender.com/inventory', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({item_id}),
@@ -42,7 +42,7 @@ export default class AddInventory extends Component{
     } 
 
     IncrementItem(item_id, val) {
-        return fetch('http://localhost:8000/inventory/:item_id"', {
+        return fetch('https://team64backend.onrender.com/inventory/:item_id"', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({item_id, val}),

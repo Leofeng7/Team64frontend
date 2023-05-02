@@ -20,7 +20,7 @@ function ZReport() {
   
   const populate = async() => {
     try {
-      const response = await fetch("http://localhost:8000/zrepfull")
+      const response = await fetch("https://team64backend.onrender.com/zrepfull")
       const jsonData = await response.json()
       setZReport(jsonData)
       console.log(jsonData)

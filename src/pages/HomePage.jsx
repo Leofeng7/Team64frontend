@@ -16,15 +16,15 @@ function HomePage() {
 
   async function checkLogin() {
     try {
-      const response = await fetch("http://localhost:8000/oauth", {
+      const response = await fetch("https://team64backend.onrender.com/oauth", {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({emailText, passwordText}),
       })
       console.log("DONE")
       console.log(response)
-      console.log(response.statusText)
-      if (response.statusText == 'OK') {
+      console.log(response.status)
+      if (parseInt(response.status) == 200) {
         navigate('/pageselect')
       } else {
         console.log("DONE")

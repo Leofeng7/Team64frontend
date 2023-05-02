@@ -8,14 +8,14 @@ import React from 'react'
 
 function updateZReport(zrep_id, zrep_items, zrep_price, offset) {
   console.log("UPDATING")
-  return fetch('http://localhost:8000/zrepfill', {
+  return fetch('https://team64backend.onrender.com/zrepfill', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ zrep_id, zrep_items, zrep_price, offset }),
   }).then((response) => response.json());
 } 
 function clearXReport() {
-  return fetch('http://localhost:8000/clearX', {
+  return fetch('https://team64backend.onrender.com/clearX', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({}),
@@ -35,7 +35,7 @@ function XReport() {
   }
   const populate = async() => {
     try {
-      const response = await fetch("http://localhost:8000/xrepfull")
+      const response = await fetch("https://team64backend.onrender.com/xrepfull")
       const jsonData = await response.json()
       setXRep(jsonData)
       
