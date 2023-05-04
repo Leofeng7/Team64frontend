@@ -21,13 +21,15 @@ function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, of
   }).then((response) => response.json());
 } 
 
- 
+
 function POSPage() {
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [productType, setProductType] = useState('Be Well');
+  const [isPurchased, setIsPurchased] = useState(false); // for purchased print
 
   const tts = () => {
 
@@ -135,16 +137,18 @@ function POSPage() {
 
   const componentRef = useRef();
 
-  const handleReactToPrint = useReactToPrint({
+  const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    onAfterPrint: () => setIsPurchased(true)
   });
 
   /**
-   * Handles the printing of the component and updates the transaction for each item in the cart.
-   * @returns {void}
+   * Updates the cart total when the cart changes.
+   * @function
+   * @name useEffect
+   * @param {array} cart - The cart state array.
    */
-  const handlePrint = () => {
-    handleReactToPrint(); 
+  const handlePrint1 = () => {
     tts()
     let offset=0
     const currentDate = new Date();
@@ -159,11 +163,12 @@ function POSPage() {
       updateTransaction(formattedDate, dayOfWeek, cartItem.totalAmount, cartItem.sm_name, offset)
       offset+=1
     });
-  }
+  };
 
-  useEffect(() => {
-    fetchProducts();
-  },[]);
+  const handlePrints = () => {
+    handlePrint()
+    handlePrint1()
+  }
 
   /**
    * Updates the cart total when the cart changes.
@@ -187,76 +192,133 @@ function POSPage() {
     setTotalAmount(newTotalAmount);
   },[cart])
 
+  /**
+   * Adds the Google Translate element to the document.
+   * @function
+   * @name addTranslateScript
+   */
+  function addTranslateScript() {
+    /**
+     * Creates a script element.
+     * @type {HTMLElement}
+     */
+    var addScript = document.createElement("script");
+      addScript.setAttribute(
+        "src",
+        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      );
+      /**
+       * Appends the script element to the body of the document.
+       */
+      document.body.appendChild(addScript);
+      /**
+       * Sets the global function that will be called when the Google Translate element is initialized.
+       */
+      window.googleTranslateElementInit = googleTranslateElementInit;
+  };
+
+  /**
+    * Creates a new Google Translate element and initializes it to English.
+    * @function
+    * @global
+    * @returns {void}
+    */
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false
+      },
+      "google_translate_element"
+    );
+  };
+
+  /**
+    * Adds the Google Translate script upon mounting.
+    * @function
+    * @param {Function} fun - The function to be executed upon mounting.
+    * @returns {void}
+    */
+  const useMountEffect = (fun) => useEffect(fun, [])
+  {
+    useMountEffect(addTranslateScript);
+  }
+
+  {/* Main page HTML */}
   return (
     <MainLayout>
-      <div className='row'>
-        <div className='col-lg-8'>
-          {isLoading ? 'Loading' : <div className='row'>
-              {products.map((product, key) =>
-                <div key={key} className='col-lg-3 mb-5'>
-                  <div className='pos-item px-0 text-center border' onClick={() => addProductToCart(product)}>
-                      <p>{product.sm_name}</p>
-                      <img src={product.sm_img} className="img-fluid" alt={product.sm_name} />
-                      <p>${product.sm_price}</p>
+      <div id="google_translate_element"></div>
+      <h1>Server's POS</h1>
+      {isLoading ? (
+        'Loading'
+      ) : (
+        <div className="smoothiegrid" style={{ marginBottom: 0 }}>
+          {[...Array(Math.ceil(products.length / 10))].map((_, rowIdx) => (
+            <div key={rowIdx} className="row row-cols-1 row-cols-lg-10 g-0 gy-2 my-0">
+              {products.slice(rowIdx * 10, rowIdx * 10 + 10).map((product, colIdx) => (
+                <div key={rowIdx * 10 + colIdx} className="col mb-2 smoothie-item">
+                  <div
+                    className="pos-item px-0 text-center border"
+                    style={{ fontSize: "9px", height: "auto" }}
+                    onClick={() => addProductToCart(product)}
+                  >
+                    <p>{product.sm_name}</p>
+                    <p>${product.sm_price}</p>
                   </div>
-
                 </div>
-              )}
-            </div>}
-       
+              ))}
+            </div>
+          ))}
         </div>
-        <div className='col-lg-4'>
-              <div style={{display: "none"}}>
-                <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
-              </div>
-              <div className='table-responsive bg-dark'>
-                <table className='table table-responsive table-light table-hover'>
-                  <thead>
-                    <tr>
-                      <td>#</td>
-                      <td>Name</td>
-                      <td>Price</td>
-                      <td>Qty</td>
-                      <td>Total</td>
-                      <td>Action</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    { cart ? cart.map((cartProduct, key) => <tr key={key}>
-                      <td>{cartProduct.sm_id}</td>
-                      <td>{cartProduct.sm_name}</td>
-                      <td>${cartProduct.sm_price}</td>
-                      <td>{cartProduct.quantity}</td>
-                      <td>${cartProduct.totalAmount}</td>
-                      <td>
-                        <button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove</button>
-                      </td>
-
-                    </tr>)
-
-                    : 'No Item in Cart'}
-                  </tbody>
-                </table>
-                <h2 className='px-2 text-white'>Total Cost: ${totalAmount.toFixed(2)}</h2>
-              </div>
-
-              <div className='mt-3'>
-                { totalAmount !== 0 ? <div>
-                  <button className='btn btn-primary' onClick={handlePrint}>
-                    Checkout
-                  </button>
-
-                </div> : 'Please add a product to the cart'
-
-                }
-              </div>
-
-
+      )}
+      
+      <div className='col-lg-4 parent-element' style={{ transform: 'translateX(50px)' }}>
+        <div style={{display: "none"}}>
+          <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
         </div>
+        <div className='table-responsive bg-dark' style={{ transform: 'scale(0.7)', height: '50vh' }}>
+          <div style={{ overflowY: 'auto', height: '100%' }}>
+            <table className='table table-responsive table-light table-hover'>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Name</td>
+                  <td>Price</td>
+                  <td>Qty</td>
+                  <td>Total</td>
+                  <td>Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                { cart ? cart.map((cartProduct, key) => <tr key={key}>
+                  <td>{cartProduct.sm_id}</td>
+                  <td>{cartProduct.sm_name}</td>
+                  <td>${cartProduct.sm_price}</td>
+                  <td>{cartProduct.quantity}</td>
+                  <td>${cartProduct.totalAmount}</td>
+                  <td>
+                    <button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove</button>
+                  </td>
+                </tr>)
+                : 'No Item in Cart'}
+              </tbody>
+            </table>
+          </div>
+          <div className='fixed-bottom bg-dark d-flex align-items-center' style={{ height: '70px', lineHeight: '50px' }}>
+            <h2 className='px-2 text-white'>Total Amount: ${totalAmount.toFixed(2)}</h2>
+          </div>
+        </div>
+        <div className='mt-3 plsaddmsg'>
+          { totalAmount !== 0 ? <div>
+            <button className='btn btn-primary paynowbtn' style={{ width: "110%" }} onClick={handlePrints}>
+              Pay Now
+            </button>
+          </div> : 'Please add a product to the cart'}
+        </div>
+        {isPurchased && <div className="purchasedbtn" style={{color: 'green'}}>Purchase successful!</div>}
       </div>
     </MainLayout>
-   
-  )
+  );
 }
 
 export default POSPage

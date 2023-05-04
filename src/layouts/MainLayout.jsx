@@ -38,24 +38,24 @@ function MainLayout({children}) {
     <div>
       <header>
         <nav className="navbar navbar-light bg-secondary">
+          <a href="/" className="navbar-brand" style={{marginLeft: '30px'}}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/271/271218.png?w=740&t=st=1683010785~exp=1683011385~hmac=abb8b250bf85129a9fe2483fd5503081235a550e79ccf9204d52f767d1df201e"
+              className="navbar-arrow"
+              alt="Back to Login"
+            />
+          </a>
           <div className="container">
             <img
               src="https://skprod.objects.frb.io/images/static/smoothie-king-logo.svg"
               className="smoothie-logo"
             />
-            <a href="/" className="navbar-brand" style={{marginRight: '30px'}}>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/271/271218.png?w=740&t=st=1683010785~exp=1683011385~hmac=abb8b250bf85129a9fe2483fd5503081235a550e79ccf9204d52f767d1df201e"
-                className="navbar-arrow"
-                alt="Back to Login"
-              />
-            </a>
             <div className="weather-details-container">
               <div
                 className="weather-icon"
                 onClick={() => setShowDetails(!showDetails)}
               >
-                {currTemp}°F
+                {currTemp}°F      
               </div>
               {showDetails && (
                 <div className="weather-details">

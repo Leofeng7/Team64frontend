@@ -20,6 +20,10 @@
     box-shadow: 10;
 }
 
+.smoothie-logo {
+  transform: translate(-20%, 0%);
+}
+
 .btn {
     background-color: #E31B23;
     color: white;
@@ -48,9 +52,11 @@
   
   .smoothie-item {
     width: 100px;
-    /* height: 150px; */
-    /* margin: 10px; */
     margin: 0.5rem;
+
+    margin: -5px;
+    padding: 5px;
+    margin-bottom: 0px;
   }
 
   .pos-item {
@@ -58,10 +64,10 @@
     font-size: 9px;
     display: inline-block;
     max-width: 100%;
+    line-height: 0.9;
   }
 
   .smoothie-item .pos-item {
-    /* display: flex; */
     flex-direction: column;
     height: 100%;
   }
@@ -73,15 +79,12 @@
   
   .smoothie-item .pos-item p {
     margin: 0;
-
-    /* font-size: 0.6rem;
-    max-width: 100%;
-    word-wrap: break-word;
-    hyphens: auto;
-    overflow: hidden;
-    text-overflow: ellipsis; */
-    /* white-space: nowrap; */
   }
+
+
+
+
+
 
 
   .container {
@@ -124,17 +127,23 @@
   .navbar-arrow {
     width: 24px;
     height: 24px;
+    margin-right: -5000px;
   }
 
   .weather-details-container {
     display: flex;
     align-items: center;
+    font-size: 15px;
   }
   
   .navbar-brand {
     margin-left: auto;
     display: flex;
     align-items: center;
+  }
+
+  .weather-icon {
+    padding-right: 20px;
   }
   
   

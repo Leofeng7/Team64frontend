@@ -4,6 +4,15 @@ import axios from "axios"
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { useReactToPrint } from 'react-to-print';
 
+/**
+ * Updates a transaction by sending a POST request to the server.
+ * @param {string} trans_date - The date of the transaction.
+ * @param {string} trans_dayofweek - The day of the week of the transaction.
+ * @param {number} trans_price - The price of the transaction.
+ * @param {string} sm_name - The name of the smoothie.
+ * @param {number} offset - Used for creating transactions and makes it easier in the backend (indexing and etc)
+ * @returns {Promise<object>} A Promise that resolves to the JSON response from the server.
+ */
 function updateTransaction(trans_date, trans_dayofweek, trans_price, sm_name, offset) {
   return fetch('https://team64backend.onrender.com/orders', {
     method: 'POST',
