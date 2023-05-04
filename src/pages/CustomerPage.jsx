@@ -23,8 +23,35 @@ function CustomerPage() {
   const [productType, setProductType] = useState('Be Well');
   const [isPurchased, setIsPurchased] = useState(false); // for purchased print
 
+  const tts = () => {
 
-  {/* Get Smoothies from Backend */}
+    const speech = new SpeechSynthesisUtterance("");
+  
+    speech.lang = "en-US";
+    console.log(window.speechSynthesis)
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech); 
+    let words="Here is your receipt : "
+    cart.forEach(cartItem => {
+        words += "Smoothie Name : "
+        words += cartItem.sm_name + "."
+        words += "Quantity : "
+        words += String(cartItem.quantity) + "."
+    });
+    words += "Total : "
+    words += String(totalAmount)
+    speech.text=words
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);  
+  };
+
+  /**
+   * Fetches smoothies from the server / backend and sets them in the state.
+   * @async
+   * @function
+   * @returns {Promise<void>} Promise that resolves when the products have been fetched and set in the state.
+   * @throws {Error} If there is an error fetching the products.
+   */
   const fetchProducts = async() => {
     try {
       const response = await fetch("https://team64backend.onrender.com/smoothies")
@@ -40,7 +67,16 @@ function CustomerPage() {
     fetchProducts();
   }, [])
 
-  {/* Add a smoothie to the customer cart */}
+  /**
+   * Adds a smoothie product to the customer's cart.
+   * @async
+   * @function
+   * @param {Object} product - The smoothie product to be added to the cart.
+   * @param {string} product.sm_id - The unique ID of the smoothie product.
+   * @param {number} product.sm_price - The price of the smoothie product.
+   * @returns {Promise<void>} Promise that resolves when the smoothie product has been added to the cart.
+   * @throws {Error} If there is an error adding the smoothie product to the cart.
+   */
   const addProductToCart = async(product) =>{
     // check if the adding product exist
     let findProductInCart = await cart.find(i=>{
@@ -80,7 +116,10 @@ function CustomerPage() {
 
   }
 
-  {/* Remove smoothie from the cart */}
+  /**
+   * Removes a smoothie from the customer's cart
+   * @param {object} product - The smoothie to remove from the cart
+   */
   const removeProduct = async(product) => {
     const newCart = cart.filter(cartItem => cartItem.sm_id !== product.sm_id);
     setCart(newCart);
@@ -88,17 +127,19 @@ function CustomerPage() {
 
   const componentRef = useRef();
 
-
-  // const handlePrint = useReactToPrint({
-  //   content: () => componentRef.current,
-  //   onAfterPrint: () => setIsPurchased(true)
-  // });
-  const handlePrint = () => ({
+  const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    onAfterPrint: () => setIsPurchased(true),
+    onAfterPrint: () => setIsPurchased(true)
   });
 
+  /**
+   * Updates the cart total when the cart changes.
+   * @function
+   * @name useEffect
+   * @param {array} cart - The cart state array.
+   */
   const handlePrint1 = () => {
+    tts()
     let offset=0
     const currentDate = new Date();
     const year = currentDate.getFullYear().toString()
@@ -122,25 +163,52 @@ function CustomerPage() {
 
   {/* Update the cart total */}
   useEffect(() => {
+    /**
+     * Calculates the new cart total.
+     * @type {number}
+     */
     let newTotalAmount = 0;
     cart.forEach(icart => {
       newTotalAmount = newTotalAmount + parseFloat(icart.totalAmount);
     })
+    /**
+     * Sets the new cart total.
+     * @type {number}
+     */
     setTotalAmount(newTotalAmount);
   },[cart])
 
-  {/* Add the google translate element to the document */}
+  /**
+   * Adds the Google Translate element to the document.
+   * @function
+   * @name addTranslateScript
+   */
   function addTranslateScript() {
+    /**
+     * Creates a script element.
+     * @type {HTMLElement}
+     */
     var addScript = document.createElement("script");
       addScript.setAttribute(
         "src",
         "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
       );
+      /**
+       * Appends the script element to the body of the document.
+       */
       document.body.appendChild(addScript);
+      /**
+       * Sets the global function that will be called when the Google Translate element is initialized.
+       */
       window.googleTranslateElementInit = googleTranslateElementInit;
   };
 
-  {/* Create google translate element and initialize it to english */}
+  /**
+    * Creates a new Google Translate element and initializes it to English.
+    * @function
+    * @global
+    * @returns {void}
+    */
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
@@ -151,7 +219,12 @@ function CustomerPage() {
     );
   };
 
-  {/* Add google translate script upon mounting */}
+  /**
+    * Adds the Google Translate script upon mounting.
+    * @function
+    * @param {Function} fun - The function to be executed upon mounting.
+    * @returns {void}
+    */
   const useMountEffect = (fun) => useEffect(fun, [])
   {
     useMountEffect(addTranslateScript);

@@ -15,6 +15,11 @@ const data = [
   { Item: "Protien Plus", Date: "01/01/2023", Price: "7.5"},
 ]
 
+/**
+ * Renders a Z Report table that displays data fetched from an external API.
+ * @function
+ * @returns {JSX.Element} - The rendered Z Report table.
+ */
 function ZReport() {
   const [data, setZReport] = useState([]);
   

@@ -8,7 +8,7 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
                   <thead>
                     <tr>
                       <td>#</td>
-                      <td>Name</td>
+                      <td>Smoothie Name</td>
                       <td>Price</td>
                       <td>Qty</td>
                       <td>Total</td>
@@ -16,9 +16,9 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
                   </thead>
                   <tbody>
                     { cart ? cart.map((cartProduct, key) => <tr key={key}>
-                      <td>{cartProduct.id}</td>
-                      <td>{cartProduct.name}</td>
-                      <td>{cartProduct.price}</td>
+                      <td>{cartProduct.sm_id}</td>
+                      <td>{cartProduct.sm_name}</td>
+                      <td>{cartProduct.sm_price}</td>
                       <td>{cartProduct.quantity}</td>
                       <td>{cartProduct.totalAmount}</td>
                     

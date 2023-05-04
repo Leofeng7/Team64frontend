@@ -19,6 +19,13 @@ function Menu() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [productType, setProductType] = useState(smoothieTypes[0]);
 
+  /**
+   * Fetches smoothies from the server / backend and sets them in the state.
+   * @async
+   * @function
+   * @returns {Promise<void>} Promise that resolves when the products have been fetched and set in the state.
+   * @throws {Error} If there is an error fetching the products.
+   */
   const fetchProducts = async () => {
     try {
       const response = await fetch('https://team64backend.onrender.com/smoothies');
@@ -44,16 +51,37 @@ function Menu() {
     handleReactToPrint();
   };
 
+  /**
+   * Adds the Google Translate element to the document.
+   * @function
+   * @name addTranslateScript
+   */
   const addTranslateScript = () => {
+    /**
+     * Creates a script element.
+     * @type {HTMLElement}
+     */
     var addScript = document.createElement('script');
     addScript.setAttribute(
       'src',
       '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
     );
+    /**
+     * Appends the script element to the body of the document.
+     */
     document.body.appendChild(addScript);
+    /**
+     * Sets the global function that will be called when the Google Translate element is initialized.
+     */
     window.googleTranslateElementInit = googleTranslateElementInit;
   };
 
+  /**
+    * Creates a new Google Translate element and initializes it to English.
+    * @function
+    * @global
+    * @returns {void}
+    */
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
@@ -68,6 +96,12 @@ function Menu() {
     addTranslateScript();
   }, []);
 
+  /**
+   * Handles the click event for a product type button and sets the current product type.
+   *
+   * @param {string} type - The type of product to set as current.
+   * @returns {void}
+   */
   const handleProductTypeClick = (type) => {
     setProductType(type);
   };

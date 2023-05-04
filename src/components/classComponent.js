@@ -56,9 +56,9 @@ export default class AddInventory extends Component{
             item_id: this.state.products.length + 1, 
             item_name: this.formData.current.product_name.value,
             item_ppp: this.formData.current.price.value,
-            item_quantitylbs: Number(this.formData.current.qty.value)
+            item_quantitylbs: this.formData.current.qty.value
         }
-
+        console.log(newProduct)
         this.AddItem(newProduct.item_quantitylbs, newProduct.item_name, newProduct.item_ppp)
         // add a new product inside products array
         this.state.products.push(newProduct);

@@ -14,7 +14,6 @@ import ExcessReport from './pages/ExcessReport';
 
 import XReport from './pages/XReport';
 import ZReport from './pages/ZReport';
-import PageSelect from './pages/PageSelect'
 
 import Menu from './pages/Menu'
 
@@ -33,7 +32,6 @@ function App() {
         <Route path="/xrep" element={<XReport/>} />
         <Route path="/zrep" element={<ZReport/>} />
         <Route path="/menu" element={<Menu/>} />
-        <Route path="/pageselect" element={<PageSelect/>} />
       </Routes>
     </Router>
   );

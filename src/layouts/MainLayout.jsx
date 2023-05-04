@@ -12,10 +12,15 @@ function MainLayout({children}) {
   const [humidity, setHumidity] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
 
-  {/* Call weather API once upon mounting */}
+  /**
+   * Calls weather API once upon mounting to retrieve current weather data.
+   * @function
+   * @name useWeather
+   * @returns {null}
+   */
   useEffect(() => {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
+    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
     xhr.send();
     xhr.onload = () => {
       {/* Set data from API call locally */}

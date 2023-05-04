@@ -32,6 +32,14 @@ export default class AddEmployee extends Component{
           body: JSON.stringify({ emp_name, emp_hours, emp_startday, shift_id }),
         }).then((response) => response.json());
     } 
+
+    DeleteItem(emp_name) { // Deleting an item from the database
+        return fetch('https://team64backend.onrender.com/employees', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({emp_name}),
+        }).then((response) => response.json());
+    }
     
     // addproduct handler method
     add = (event) => {
@@ -52,8 +60,8 @@ export default class AddEmployee extends Component{
     }
     delVal = (event) => {
         const indexOfArray = event.target.value;
+        this.DeleteItem(this.state.employees[indexOfArray].emp_name)
         delete this.state.employees[indexOfArray];
-        
         this.setState({
             employees: this.state.employees
         });

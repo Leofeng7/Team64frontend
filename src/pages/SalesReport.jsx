@@ -12,15 +12,33 @@ function SalesReport() {
   const [startDate, setStartDate] = useState("2000-01-01")
   const [endDate, setEndDate] = useState("2023-01-01")
 
+  /**
+   * Sets the start date and logs it to the console
+   * @param {object} event - The event object
+   * @param {string} event.target.value - The value of the target element
+   * @returns {void}
+   */
   const changeStartDate = (event) => {
     setStartDate(event.target.value);
     console.log(startDate)
   }
 
+  /**
+   * Updates the end date state based on the input value of an event.
+   * 
+   * @param {Object} event - The event object containing the target value.
+   */
   const changeEndDate = (event) => {
     setEndDate(event.target.value);
   }
 
+  /**
+   * Update best sales report for a given date range
+   * @async
+   * @function updateBest
+   * @throws {Error} If the fetch request fails or the response is not JSON
+   * @returns {Promise<void>} Promise representing the completion of the update
+   */
   async function updateBest() {
     const type=1
     try {
@@ -37,6 +55,14 @@ function SalesReport() {
     }
   }
 
+  /**
+   * Fetches sales report for the worst-selling items within a specified time range and updates the state accordingly.
+   *
+   * @async
+   * @function updateWorst
+   * @throws {Error} Throws an error if the fetch request fails.
+   * @returns {Promise<void>} A Promise that resolves when the state is updated with the fetched data.
+   */
   async function updateWorst() {
     const type=0
     try {
@@ -53,6 +79,10 @@ function SalesReport() {
     }
   }
 
+  /**
+   * Calls updateBest() and updateWorst() to fetch and update data for best and worst selling items.
+   * @returns {void}
+   */
   function handleItems() {
     updateBest()
     updateWorst()
