@@ -26,7 +26,11 @@ function CustomerPage() {
   const tts = () => {
 
     const speech = new SpeechSynthesisUtterance("");
-  
+    speech.rate=1.2
+    const voices = window.speechSynthesis.getVoices();
+    console.log(voices)
+    const selectedVoice = voices.find(voice => voice.name === "Google UK English Male");
+    speech.voice = selectedVoice
     speech.lang = "en-US";
     console.log(window.speechSynthesis)
     window.speechSynthesis.cancel();
@@ -38,7 +42,7 @@ function CustomerPage() {
         words += "Quantity : "
         words += String(cartItem.quantity) + "."
     });
-    words += "Total : "
+    words += "Order Total : "
     words += String(totalAmount)
     speech.text=words
     window.speechSynthesis.cancel();

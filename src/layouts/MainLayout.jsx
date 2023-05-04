@@ -20,7 +20,7 @@ function MainLayout({children}) {
    */
   useEffect(() => {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
+    xhr.open('GET', 'https://api.openweathermap.org/data/2.5/weather?lat=30.628&lon=-96.334&units=imperial&appid=703f1d8f031ba9041b4de2e90e795853')
     xhr.send();
     xhr.onload = () => {
       {/* Set data from API call locally */}
